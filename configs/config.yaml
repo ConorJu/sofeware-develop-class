@@ -1,0 +1,57 @@
+# YOLO Traffic Counter Configuration
+project:
+  name: "yolo_traffic_counter"
+  version: "1.0.0"
+  
+# Data Configuration
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  annotations_dir: "data/annotations"
+  train_split: 0.8
+  val_split: 0.2
+  
+# Model Configuration
+model:
+  name: "yolov8n"  # Options: yolov8n, yolov8s, yolov8m, yolov8l, yolov8x
+  pretrained: true
+  num_classes: 2  # person, vehicle
+  input_size: 640
+  
+# Training Configuration
+training:
+  epochs: 100
+  batch_size: 16
+  learning_rate: 0.001
+  patience: 10
+  device: "auto"  # auto, cpu, cuda
+  workers: 4
+  
+# Detection Configuration
+detection:
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+  max_detections: 100
+  
+# Counting Configuration
+counting:
+  line_position: 0.5  # Position of counting line (0-1)
+  track_history: 30   # Frames to keep track history
+  min_track_length: 5 # Minimum track length to count
+  
+# Classes
+classes:
+  0: "person"
+  1: "vehicle"
+  
+# Frontend Configuration
+frontend:
+  port: 8501
+  host: "localhost"
+  title: "YOLO Traffic Counter"
+  
+# Paths
+paths:
+  models_dir: "models"
+  weights_file: "models/best.pt"
+  test_video: "data/raw/test_video.mp4"
