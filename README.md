@@ -296,7 +296,6 @@ python -m pytest tests/ -v
 Run specific tests:
 ```bash
 python -m pytest tests/test_detector.py -v
-python -m pytest tests/test_counter.py -v
 ```
 
 ## 🤝 Contributing
