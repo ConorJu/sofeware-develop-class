@@ -87,30 +87,42 @@ class YOLODetector:
     def _load_model(self, weights_path: str = None) -> None:
         """Load YOLO model"""
         try:
+            # First priority: Explicit path provided
             if weights_path and Path(weights_path).exists():
-                logger.info(f"Loading model from: {weights_path}")
+                logger.info(f"Loading model from provided path: {weights_path}")
                 self.model = YOLO(weights_path)
-            else:
-                # Try to load from config
-                default_weights = config.get('paths.weights_file')
-                if Path(default_weights).exists():
-                    logger.info(f"Loading model from config: {default_weights}")
-                    self.model = YOLO(default_weights)
-                else:
-                    # Load pretrained model
-                    model_name = config.get('model.name', 'yolov8n')
-                    logger.info(f"Loading pretrained model: {model_name}")
-                    self.model = YOLO(f"{model_name}.pt")
+                logger.info(f"Model loaded successfully from: {weights_path}")
+                return
+            
+            # Second priority: Config default path
+            default_weights = config.get('paths.weights_file')
+            if Path(default_weights).exists():
+                logger.info(f"Loading model from config path: {default_weights}")
+                self.model = YOLO(default_weights)
+                logger.info(f"Model loaded successfully from: {default_weights}")
+                return
+            
+            # Third priority: Local model file with name from config
+            model_name = config.get('model.name', 'yolov8n')
+            model_path = f"{model_name}.pt"
+            if Path(model_path).exists():
+                logger.info(f"Loading local model: {model_path}")
+                self.model = YOLO(model_path)
+                logger.info(f"Model loaded successfully from: {model_path}")
+                return
+            
+            # Fourth priority: Download pretrained model if not found locally
+            logger.info(f"No local model found, attempting to download pretrained model: {model_name}")
+            self.model = YOLO(f"{model_name}.pt")
+            logger.info(f"Pretrained model {model_name} downloaded and loaded successfully")
             
             # Move model to device
             if self.device != 'cpu':
                 self.model.to(self.device)
             
-            logger.info("Model loaded successfully")
-            
         except Exception as e:
-            logger.error(f"Error loading model: {e}")
-            raise
+            logger.error(f"Error loading model: {str(e)}")
+            raise RuntimeError(f"Failed to load YOLO model: {str(e)}")
     
     def detect(self, image: np.ndarray, return_image: bool = False) -> Tuple[List[Detection], Optional[np.ndarray]]:
         """
@@ -399,20 +411,55 @@ class YOLODetector:
             return {}
         
         try:
+            # Get model file information
+            model_file = Path(self.model.ckpt_path) if hasattr(self.model, 'ckpt_path') else None
+            model_size = model_file.stat().st_size // (1024 * 1024) if model_file and model_file.exists() else None
+            
+            # Get model details
+            model_name = self.model.model.yaml_file.stem if hasattr(self.model, 'model') and hasattr(self.model.model, 'yaml_file') else "yolo"
+            
+            # Extract input size from model
+            input_size = None
+            try:
+                if hasattr(self.model, 'model') and hasattr(self.model.model, 'args'):
+                    input_size = self.model.model.args.get('imgsz', 640)
+                else:
+                    input_size = 640  # default YOLO size
+            except:
+                input_size = 640
+            
+            # Get task type
+            task = "detect"
+            if hasattr(self.model, 'task'):
+                task = self.model.task
+                
             info = {
+                'name': model_name,
+                'path': str(model_file) if model_file else "unknown",
+                'size_mb': model_size,
                 'model_type': type(self.model).__name__,
                 'device': self.device,
+                'input_size': input_size,
+                'task': task,
                 'confidence_threshold': self.confidence_threshold,
                 'nms_threshold': self.nms_threshold,
                 'max_detections': self.max_detections,
-                'classes': self.classes
+                'classes': self.classes,
+                'num_classes': len(self.classes)
             }
             
             return info
             
         except Exception as e:
-            logger.error(f"Could not get model info: {e}")
-            return {}
+            logger.error(f"Could not get complete model info: {str(e)}")
+            
+            # Return minimal info if detailed extraction fails
+            return {
+                'model_type': type(self.model).__name__,
+                'device': self.device,
+                'classes': self.classes,
+                'confidence_threshold': self.confidence_threshold
+            }
 
 
 def main():

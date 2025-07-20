@@ -1,1 +1,165 @@
 2025-07-19 16:52:35,030 - yolo_traffic_counter - ERROR - Error executing command 'web': No module named 'gradio'
+2025-07-20 11:48:16,805 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 11:48:16,805 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 11:48:16,805 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 11:48:16,828 - yolo_traffic_counter - ERROR - Error executing command 'web': Invalid value for parameter `type`: file. Please choose from one of: ['filepath', 'binary']
+2025-07-20 12:03:33,807 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:03:33,807 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:03:33,807 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:03:33,860 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:03:36,480 - yolo_traffic_counter - ERROR - Error executing command 'web': When localhost is not accessible, a shareable link must be created. Please set share=True or check your proxy settings to allow access to localhost.
+2025-07-20 12:04:05,252 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:04:05,252 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:04:05,252 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:04:05,300 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:04:07,926 - yolo_traffic_counter - ERROR - Error executing command 'web': When localhost is not accessible, a shareable link must be created. Please set share=True or check your proxy settings to allow access to localhost.
+2025-07-20 12:05:48,548 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:05:48,548 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:05:48,548 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:05:48,605 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:11:52,376 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:11:52,376 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:11:52,376 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:11:52,433 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:20:00,997 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:20:00,997 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:20:00,997 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:20:01,060 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:20:43,423 - yolo_traffic_counter - INFO - Loading pretrained model: yolov8n
+2025-07-20 12:20:43,434 - yolo_traffic_counter - ERROR - Error loading model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:20:43,435 - yolo_traffic_counter - ERROR - Error initializing models: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:25:34,454 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:25:34,454 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:25:34,454 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:25:34,512 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:45:15,624 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:45:15,624 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:45:15,624 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:45:15,625 - yolo_traffic_counter - INFO - Model file already exists in models directory: models/yolov8n.pt
+2025-07-20 12:45:15,637 - yolo_traffic_counter - INFO - Loading model from provided path: models/yolov8n.pt
+2025-07-20 12:45:15,644 - yolo_traffic_counter - ERROR - Error loading model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:45:15,644 - yolo_traffic_counter - ERROR - Error initializing models: Failed to load YOLO model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:45:15,644 - yolo_traffic_counter - INFO - Attempting to initialize models on startup...
+2025-07-20 12:45:15,644 - yolo_traffic_counter - INFO - Found weights file at models/yolov8n.pt
+2025-07-20 12:45:15,698 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:46:10,784 - yolo_traffic_counter - INFO - Models not initialized. Attempting automatic initialization...
+2025-07-20 12:46:10,785 - yolo_traffic_counter - INFO - Using model from config path: models/yolov8n.pt
+2025-07-20 12:46:10,785 - yolo_traffic_counter - INFO - Loading model from provided path: models/yolov8n.pt
+2025-07-20 12:46:10,788 - yolo_traffic_counter - ERROR - Error loading model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:46:10,788 - yolo_traffic_counter - ERROR - Error initializing models: Failed to load YOLO model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:46:10,789 - yolo_traffic_counter - ERROR - Failed to initialize models automatically
+2025-07-20 12:48:14,352 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:48:14,352 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:48:14,352 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:48:14,352 - yolo_traffic_counter - INFO - Model file already exists in models directory: models/yolov8n.pt
+2025-07-20 12:48:14,368 - yolo_traffic_counter - INFO - Loading model from provided path: models/yolov8n.pt
+2025-07-20 12:48:14,372 - yolo_traffic_counter - ERROR - Error loading model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:48:14,372 - yolo_traffic_counter - ERROR - Error initializing models: Failed to load YOLO model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:48:14,372 - yolo_traffic_counter - INFO - Attempting to initialize models on startup...
+2025-07-20 12:48:14,372 - yolo_traffic_counter - INFO - Found weights file at models/yolov8n.pt
+2025-07-20 12:48:14,425 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:48:14,457 - yolo_traffic_counter - ERROR - Error executing command 'web': Cannot find empty port in range: 8501-8501. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-07-20 12:48:34,133 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:48:34,133 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:48:34,133 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:48:34,133 - yolo_traffic_counter - INFO - Model file already exists in models directory: models/yolov8n.pt
+2025-07-20 12:48:34,143 - yolo_traffic_counter - INFO - Loading model from provided path: models/yolov8n.pt
+2025-07-20 12:48:34,149 - yolo_traffic_counter - ERROR - Error loading model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:48:34,149 - yolo_traffic_counter - ERROR - Error initializing models: Failed to load YOLO model: PytorchStreamReader failed reading zip archive: failed finding central directory
+2025-07-20 12:48:34,149 - yolo_traffic_counter - INFO - Attempting to initialize models on startup...
+2025-07-20 12:48:34,149 - yolo_traffic_counter - INFO - Found weights file at models/yolov8n.pt
+2025-07-20 12:48:34,203 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8501
+2025-07-20 12:48:34,233 - yolo_traffic_counter - ERROR - Error executing command 'web': Cannot find empty port in range: 8501-8501. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-07-20 12:50:34,648 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:50:34,648 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:50:34,648 - yolo_traffic_counter - INFO - Traffic Counter App initialized
+2025-07-20 12:50:34,648 - yolo_traffic_counter - INFO - Model file already exists in models directory: models/yolov8n.pt
+2025-07-20 12:50:34,661 - yolo_traffic_counter - INFO - Loading model from provided path: models/yolov8n.pt
+2025-07-20 12:50:34,688 - yolo_traffic_counter - INFO - Model loaded successfully from: models/yolov8n.pt
+2025-07-20 12:50:34,688 - yolo_traffic_counter - INFO - YOLO Detector initialized on device: mps
+2025-07-20 12:50:34,688 - yolo_traffic_counter - INFO - Traffic Counter initialized
+2025-07-20 12:50:34,689 - yolo_traffic_counter - INFO - YOLO Trainer initialized with model: yolov8n
+2025-07-20 12:50:34,689 - yolo_traffic_counter - INFO - Using device: mps
+2025-07-20 12:50:34,689 - yolo_traffic_counter - ERROR - Could not get complete model info: 'str' object has no attribute 'stem'
+2025-07-20 12:50:34,689 - yolo_traffic_counter - INFO - Attempting to initialize models on startup...
+2025-07-20 12:50:34,689 - yolo_traffic_counter - INFO - Found weights file at models/yolov8n.pt
+2025-07-20 12:50:34,743 - yolo_traffic_counter - INFO - Launching Traffic Counter App on localhost:8502
+2025-07-20 12:50:47,789 - yolo_traffic_counter - INFO - Updated confidence threshold to: 0.5
+2025-07-20 12:50:47,789 - yolo_traffic_counter - INFO - Counts and tracks reset
+2025-07-20 12:50:47,899 - yolo_traffic_counter - INFO - Added counting line: counting_line from (0, 1080) to (3840, 1080)
+2025-07-20 12:50:47,899 - yolo_traffic_counter - INFO - Processing video: /private/var/folders/pf/t18w2yh13k33q61dg5h4ztwr0000gn/T/gradio/b87a6dff86d017676177669897c6b473be788b7a05027b32f3fa2d46549c73e3/3007580-uhd_3840_2160_30fps.mp4
+2025-07-20 12:50:47,966 - yolo_traffic_counter - INFO - Processing video: /private/var/folders/pf/t18w2yh13k33q61dg5h4ztwr0000gn/T/gradio/b87a6dff86d017676177669897c6b473be788b7a05027b32f3fa2d46549c73e3/3007580-uhd_3840_2160_30fps.mp4
+2025-07-20 12:50:47,967 - yolo_traffic_counter - INFO - Video properties: 3840x2160, 29 FPS, 897 frames
+2025-07-20 12:50:54,052 - yolo_traffic_counter - INFO - Progress: 5.0% (45/897)
+2025-07-20 12:50:54,053 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:50:57,471 - yolo_traffic_counter - INFO - Progress: 10.0% (90/897)
+2025-07-20 12:50:57,471 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:01,239 - yolo_traffic_counter - INFO - Progress: 15.1% (135/897)
+2025-07-20 12:51:01,240 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:04,253 - yolo_traffic_counter - INFO - Progress: 20.1% (180/897)
+2025-07-20 12:51:04,253 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:07,422 - yolo_traffic_counter - INFO - Progress: 25.1% (225/897)
+2025-07-20 12:51:07,422 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:10,501 - yolo_traffic_counter - INFO - Progress: 30.1% (270/897)
+2025-07-20 12:51:10,503 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:13,618 - yolo_traffic_counter - INFO - Progress: 35.1% (315/897)
+2025-07-20 12:51:13,618 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:16,678 - yolo_traffic_counter - INFO - Progress: 40.1% (360/897)
+2025-07-20 12:51:16,679 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:19,677 - yolo_traffic_counter - INFO - Progress: 45.2% (405/897)
+2025-07-20 12:51:19,677 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:22,694 - yolo_traffic_counter - INFO - Progress: 50.2% (450/897)
+2025-07-20 12:51:22,694 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:25,794 - yolo_traffic_counter - INFO - Progress: 55.2% (495/897)
+2025-07-20 12:51:25,794 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:28,889 - yolo_traffic_counter - INFO - Progress: 60.2% (540/897)
+2025-07-20 12:51:28,890 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:32,117 - yolo_traffic_counter - INFO - Progress: 65.2% (585/897)
+2025-07-20 12:51:32,117 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:35,185 - yolo_traffic_counter - INFO - Progress: 70.2% (630/897)
+2025-07-20 12:51:35,185 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:38,033 - yolo_traffic_counter - INFO - Progress: 75.3% (675/897)
+2025-07-20 12:51:38,033 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:40,888 - yolo_traffic_counter - INFO - Progress: 80.3% (720/897)
+2025-07-20 12:51:40,888 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:43,816 - yolo_traffic_counter - INFO - Progress: 85.3% (765/897)
+2025-07-20 12:51:43,816 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:46,747 - yolo_traffic_counter - INFO - Progress: 90.3% (810/897)
+2025-07-20 12:51:46,747 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:49,717 - yolo_traffic_counter - INFO - Progress: 95.3% (855/897)
+2025-07-20 12:51:49,718 - yolo_traffic_counter - INFO - Current counts: {}
+2025-07-20 12:51:52,519 - yolo_traffic_counter - INFO - Video processing completed:
+2025-07-20 12:51:52,519 - yolo_traffic_counter - INFO - Processed 897 frames in 64.55s
+2025-07-20 12:51:52,519 - yolo_traffic_counter - INFO - Average FPS: 13.90
+2025-07-20 12:51:52,519 - yolo_traffic_counter - INFO - Final counts: {}
+2025-07-20 12:51:52,529 - yolo_traffic_counter - INFO - Counting statistics saved to: 3007580-uhd_3840_2160_30fps_counting_stats.json
+2025-07-20 12:55:31,275 - yolo_traffic_counter - INFO - Data Converter initialized
+2025-07-20 12:55:31,275 - yolo_traffic_counter - WARNING - No XML files found in annotations
+2025-07-20 12:58:19,214 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:58:19,215 - yolo_traffic_counter - INFO - Found 1 images to annotate
+2025-07-20 12:58:19,215 - yolo_traffic_counter - INFO - Annotating image 1/1: 怀疑的汤姆猫.jpg
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - Annotating image: images/怀疑的汤姆猫.jpg
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - Controls:
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - - Left click and drag to draw bounding box
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - - Press 0-9 to change class
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - - Press 's' to save
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - - Press 'd' to delete last annotation
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - - Press 'c' to clear all annotations
+2025-07-20 12:58:19,321 - yolo_traffic_counter - INFO - - Press 'q' to quit
+2025-07-20 12:58:28,746 - yolo_traffic_counter - INFO - Added bounding box: person at (316, 170, 1002, 270)
+2025-07-20 12:58:30,930 - yolo_traffic_counter - INFO - Added bounding box: person at (414, 183, 545, 294)
+2025-07-20 12:58:32,979 - yolo_traffic_counter - INFO - Added bounding box: person at (579, 331, 663, 720)
+2025-07-20 12:58:46,624 - yolo_traffic_counter - INFO - Image Annotator initialized
+2025-07-20 12:58:46,625 - yolo_traffic_counter - INFO - Found 1 images to annotate
+2025-07-20 12:58:46,625 - yolo_traffic_counter - INFO - Annotating image 1/1: 怀疑的汤姆猫.jpg
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - Annotating image: images/怀疑的汤姆猫.jpg
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - Controls:
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - - Left click and drag to draw bounding box
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - - Press 0-9 to change class
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - - Press 's' to save
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - - Press 'd' to delete last annotation
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - - Press 'c' to clear all annotations
+2025-07-20 12:58:46,718 - yolo_traffic_counter - INFO - - Press 'q' to quit
+2025-07-20 12:58:55,885 - yolo_traffic_counter - INFO - Added bounding box: person at (24, 53, 836, 657)
+2025-07-20 12:59:06,220 - yolo_traffic_counter - INFO - Annotations saved
+2025-07-20 12:59:07,726 - yolo_traffic_counter - INFO - Annotations saved

@@ -278,17 +278,26 @@ class TrafficCounter:
     
     def process_frame(self, frame: np.ndarray) -> Tuple[np.ndarray, Dict[str, Any]]:
         """
-        Process single frame for counting
+        Process single frame
         
         Args:
-            frame: Input frame
+            frame: Input frame as numpy array
             
         Returns:
-            Tuple of (annotated_frame, frame_stats)
+            Tuple of (annotated_frame, frame_statistics)
         """
         with self.lock:
-            # Detect objects
-            detections, _ = self.detector.detect(frame, return_image=False)
+            # Check if detector is initialized
+            if self.detector is None:
+                error_message = "Detector not initialized"
+                logger.error(error_message)
+                # Add error text to frame
+                cv2.putText(frame, error_message, (50, 50), 
+                          cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
+                return frame, {"error": error_message}
+            
+            # Run detection
+            detections, _ = self.detector.detect(frame)
             
             # Associate detections to tracks
             associations = self._associate_detections_to_tracks(detections)
@@ -299,15 +308,15 @@ class TrafficCounter:
             # Check line crossings
             self._check_line_crossings()
             
-            # Create annotated frame
+            # Draw visualizations
             annotated_frame = self._draw_frame(frame.copy())
             
-            # Prepare frame statistics
+            # Collect frame statistics
             frame_stats = {
-                'detections': len(detections),
-                'active_tracks': len(self.tracks),
                 'counts': dict(self.counts),
-                'total_count': sum(self.counts.values())
+                'num_detections': len(detections),
+                'num_tracks': len(self.tracks),
+                'track_ids': list(self.tracks.keys())
             }
             
             return annotated_frame, frame_stats

@@ -53,5 +53,5 @@ frontend:
 # Paths
 paths:
   models_dir: "models"
-  weights_file: "models/best.pt"
+  weights_file: "models/yolov8n.pt"
   test_video: "data/raw/test_video.mp4"

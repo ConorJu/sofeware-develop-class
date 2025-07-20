@@ -44,32 +44,137 @@ class TrafficCounterApp:
         self.is_processing = False
         
         logger.info("Traffic Counter App initialized")
+        
+        # Create models directory if it doesn't exist
+        models_dir = config.get('paths.models_dir', 'models')
+        Path(models_dir).mkdir(exist_ok=True, parents=True)
+        
+        # Check for model file in root directory and copy to models directory if needed
+        model_name = config.get('model.name', 'yolov8n')
+        root_model_path = Path(f"{model_name}.pt")
+        if root_model_path.exists():
+            models_dir_path = Path(models_dir)
+            target_path = models_dir_path / root_model_path.name
+            
+            if not target_path.exists():
+                logger.info(f"Found {root_model_path} in root directory, copying to {target_path}")
+                import shutil
+                shutil.copy(str(root_model_path), str(target_path))
+                logger.info(f"Model copied successfully")
+                
+                # Update config to use the copied model
+                config.update_config('paths.weights_file', str(target_path))
+                config.save_config()
+            else:
+                logger.info(f"Model file already exists in models directory: {target_path}")
+        
+        # Auto-initialize models
+        try:
+            weights_path = config.get('paths.weights_file')
+            if os.path.exists(weights_path):
+                self.initialize_models(weights_path)
+            else:
+                default_model = config.get('model.name', 'yolov8n')
+                model_path = f"{default_model}.pt"
+                if os.path.exists(model_path):
+                    self.initialize_models(model_path)
+                else:
+                    logger.warning(f"No model weights found at {weights_path} or {model_path}")
+        except Exception as e:
+            logger.error(f"Error auto-initializing models: {e}")
     
     def initialize_models(self, weights_path: str = None) -> str:
         """Initialize YOLO models"""
         try:
+            # Create models directory if it doesn't exist
+            models_dir = config.get('paths.models_dir', 'models')
+            Path(models_dir).mkdir(exist_ok=True, parents=True)
+            
+            # If no weights_path provided but we have a model in models directory, use it
+            if weights_path is None or not Path(weights_path).exists():
+                default_weights = config.get('paths.weights_file')
+                if Path(default_weights).exists():
+                    logger.info(f"Using model from config path: {default_weights}")
+                    weights_path = default_weights
+                else:
+                    # Check for yolov8n.pt in models directory
+                    model_name = config.get('model.name', 'yolov8n')
+                    model_in_models = Path(models_dir) / f"{model_name}.pt"
+                    
+                    if model_in_models.exists():
+                        logger.info(f"Using model found in models directory: {model_in_models}")
+                        weights_path = str(model_in_models)
+                    # Check for model in root directory
+                    elif Path(f"{model_name}.pt").exists():
+                        root_model = Path(f"{model_name}.pt")
+                        logger.info(f"Using model found in root directory: {root_model}")
+                        weights_path = str(root_model)
+            
+            # Initialize detector with the weights path
             self.detector = YOLODetector(weights_path)
             self.counter = TrafficCounter(self.detector)
             self.trainer = YOLOTrainer()
             
+            # Get model info for the response
             model_info = self.detector.get_model_info()
             
-            return f"✅ Models initialized successfully!\n\nModel Info:\n{json.dumps(model_info, indent=2)}"
+            # Update config with current weights path if different from config
+            if weights_path and weights_path != config.get('paths.weights_file'):
+                config.update_config('paths.weights_file', weights_path)
+                config.save_config()
+                logger.info(f"Updated config with current weights path: {weights_path}")
+            
+            # Create formatted success message
+            model_name = model_info.get('name', 'Unknown')
+            device = model_info.get('device', 'Unknown')
+            classes = model_info.get('classes', {})
+            class_names = ', '.join(classes.values())
+            
+            success_msg = [
+                f"✅ Models initialized successfully!",
+                "",
+                f"**Model:** {model_name}",
+                f"**Device:** {device}",
+                f"**Classes:** {class_names}",
+                "",
+                f"The model is now ready to process videos."
+            ]
+            
+            return "\n".join(success_msg)
         
         except Exception as e:
-            logger.error(f"Error initializing models: {e}")
-            return f"❌ Error initializing models: {str(e)}"
+            logger.error(f"Error initializing models: {str(e)}")
+            
+            # Create detailed error message with troubleshooting steps
+            error_msg = [
+                f"❌ Error initializing models: {str(e)}",
+                "",
+                "**Troubleshooting:**",
+                "1. Check if the model file exists",
+                f"2. Verify that the path in configs/config.yaml is correct",
+                "3. Make sure you have sufficient disk space",
+                "4. Check internet connection if downloading models",
+                "",
+                "The system will attempt to download the model if not found locally."
+            ]
+            
+            return "\n".join(error_msg)
     
     def process_video_for_counting(self, video_file, confidence_threshold: float = 0.5,
                                  line_position: float = 0.5, show_tracks: bool = True) -> Tuple[str, str, str]:
         """Process video for traffic counting"""
         if video_file is None:
-            return "❌ Please upload a video file", "", ""
-        
-        if self.counter is None:
-            return "❌ Please initialize models first", "", ""
+            return "❌ Please upload a video file", None, ""
         
         try:
+            # Try to initialize models if not already initialized
+            if self.counter is None or self.detector is None:
+                logger.info("Models not initialized. Attempting automatic initialization...")
+                init_result = self.initialize_models()
+                if self.counter is None or self.detector is None:
+                    logger.error("Failed to initialize models automatically")
+                    return f"❌ Models initialization failed: {init_result}", None, ""
+            
             self.is_processing = True
             
             # Update detection threshold
@@ -83,6 +188,10 @@ class TrafficCounterApp:
             
             # Get video dimensions for counting line
             cap = cv2.VideoCapture(video_file.name)
+            if not cap.isOpened():
+                self.is_processing = False
+                return "❌ Cannot open video file. The file may be corrupted or in an unsupported format.", None, ""
+                
             width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
             cap.release()
@@ -93,6 +202,7 @@ class TrafficCounterApp:
             self.counter.add_horizontal_counting_line(line_y, width, "counting_line")
             
             # Process video
+            logger.info(f"Processing video: {video_file.name}")
             stats = self.counter.process_video(
                 video_file.name,
                 output_path=output_path,
@@ -100,6 +210,10 @@ class TrafficCounterApp:
                 save_stats=True
             )
             
+            if not stats:
+                self.is_processing = False
+                return "❌ Video processing failed. Please check the logs for details.", None, ""
+                
             self.processing_stats = stats
             self.current_video_path = output_path
             
@@ -115,8 +229,13 @@ class TrafficCounterApp:
         
         except Exception as e:
             self.is_processing = False
-            logger.error(f"Error processing video: {e}")
-            return f"❌ Error processing video: {str(e)}", "", ""
+            logger.error(f"Error processing video: {str(e)}")
+            
+            # Check if it's a model-related error
+            if "model" in str(e).lower():
+                return f"❌ Model error: {str(e)}\n\nPlease go to the Model Management tab and initialize the models.", None, ""
+            else:
+                return f"❌ Error processing video: {str(e)}", None, ""
     
     def _format_counting_results(self, stats: Dict[str, Any]) -> str:
         """Format counting results for display"""
@@ -290,13 +409,40 @@ class TrafficCounterApp:
     def get_model_info(self) -> str:
         """Get current model information"""
         if self.detector is None:
-            return "❌ No model loaded"
+            return """❌ **No model loaded**
+            
+Please initialize models using the button below. 
+
+If initialization fails:
+1. Check that the model file exists in the `models` directory
+2. Ensure the path in config.yaml is correct
+3. The system will try to download the model automatically if it doesn't exist
+            """
         
         try:
             info = self.detector.get_model_info()
-            return f"**Model Information:**\n\n```json\n{json.dumps(info, indent=2)}\n```"
+            
+            # Format info in markdown
+            model_info_md = [
+                "✅ **Model Information**",
+                "",
+                f"**Model:** {info.get('name', 'Unknown')}",
+                f"**Task:** {info.get('task', 'Detection')}",
+                f"**Size:** {info.get('input_size', 'Unknown')}",
+                f"**Device:** {info.get('device', 'Unknown')}",
+                "",
+                "**Classes:**"
+            ]
+            
+            # Add classes
+            classes = info.get('classes', {})
+            for class_id, class_name in classes.items():
+                model_info_md.append(f"  • {class_id}: {class_name}")
+            
+            return "\n".join(model_info_md)
         
         except Exception as e:
+            logger.error(f"Error getting model info: {str(e)}")
             return f"❌ Error getting model info: {str(e)}"
     
     def create_interface(self) -> gr.Interface:
@@ -313,6 +459,20 @@ class TrafficCounterApp:
         .progress-bar {
             background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
         }
+        .model-status {
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .model-status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .model-status-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
         """
         
         with gr.Blocks(css=css, title="YOLO Traffic Counter") as interface:
@@ -322,6 +482,10 @@ class TrafficCounterApp:
             A comprehensive traffic analysis system using YOLO object detection.
             Upload videos to count vehicles and pedestrians with real-time visualization.
             """)
+            
+            # Model Status
+            with gr.Row():
+                model_status = gr.HTML(self._get_model_status_html())
             
             with gr.Tabs():
                 # Tab 1: Traffic Counting
@@ -333,7 +497,7 @@ class TrafficCounterApp:
                             video_input = gr.File(
                                 label="Upload Video",
                                 file_types=[".mp4", ".avi", ".mov", ".mkv"],
-                                type="file"
+                                type="filepath"
                             )
                             
                             with gr.Row():
@@ -564,6 +728,17 @@ class TrafficCounterApp:
         logger.info(f"Launching Traffic Counter App on {launch_params['server_name']}:{launch_params['server_port']}")
         
         return interface.launch(**launch_params)
+
+    def _get_model_status_html(self) -> str:
+        """Get HTML for model status indicator"""
+        if self.detector is not None and self.counter is not None:
+            status_class = "model-status model-status-active"
+            status_text = "✅ Models initialized and ready"
+        else:
+            status_class = "model-status model-status-inactive"
+            status_text = "❌ Models not initialized. Please go to Model Management tab to initialize."
+            
+        return f"<div class='{status_class}'>{status_text}</div>"
 
 
 def main():

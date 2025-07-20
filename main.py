@@ -130,6 +130,22 @@ Examples:
         if args.command == 'web':
             from src.frontend.app import TrafficCounterApp
             app = TrafficCounterApp()
+            
+            # Initialize models before launching the app
+            logger.info("Attempting to initialize models on startup...")
+            
+            # First check for model files
+            weights_file = config.get('paths.weights_file')
+            default_model = config.get('model.name', 'yolov8n')
+            
+            if Path(weights_file).exists():
+                logger.info(f"Found weights file at {weights_file}")
+            elif Path(f"{default_model}.pt").exists():
+                logger.info(f"Found default model at {default_model}.pt")
+            else:
+                logger.info(f"No model found at {weights_file} or {default_model}.pt")
+                logger.info("The app will attempt to download a model if needed")
+            
             app.launch(
                 server_name=args.host,
                 server_port=args.port,
